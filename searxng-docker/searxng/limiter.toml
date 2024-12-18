@@ -1,0 +1,9 @@
+# limiter.toml
+
+[botdetection.ip_limit]
+# Activate link_token method in the ip_limit method
+link_token = false
+
+[botdetection.ip_lists]
+block_ip = []
+pass_ip = ["127.0.0.1", "::1"]
