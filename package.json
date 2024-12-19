@@ -83,6 +83,7 @@
 		"katex": "^0.16.9",
 		"marked": "^9.1.0",
 		"mermaid": "^10.9.3",
+		"openai": "^4.77.0",
 		"paneforge": "^0.0.6",
 		"panzoom": "^9.4.3",
 		"prosemirror-commands": "^1.6.0",
