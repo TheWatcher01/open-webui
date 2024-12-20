@@ -116,7 +116,18 @@ services:
         max-size: "1m"
         max-file: "1"
 
-  
+  n8n:
+    container_name: n8n
+    image: n8nio/n8n:latest
+    ports:
+      - "5678:5678"
+    env_file:
+      - /home/thewatcher/projets/open-webui/.env
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - openwebui-llama-network
+      - openwebui-searxng-network
 
 networks:
   openwebui-llama-network:
