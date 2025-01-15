@@ -71,6 +71,9 @@
       "braveApi": {
         "label": "کلید API بریو",
         "placeholder": "کلید API بریو خود را وارد کنید"
+      },
+      "searchOnByDefault": {
+        "label": "جستجوی اینترنتی به صورت پیش‌فرض فعال باشد"
       }
     },
     "system": {
@@ -327,6 +330,14 @@
         "label": "تعداد اسناد بازیابی شده",
         "placeholder": "تعداد اسناد بازیابی شده را وارد کنید",
         "required": "لطفاً تعداد اسناد بازیابی شده را وارد کنید"
+      },
+      "splittingSeparator": {
+        "label": "جداکننده",
+        "placeholder": "جداکننده را وارد کنید (مثلاً \\n\\n)",
+        "required": "لطفاً یک جداکننده وارد کنید"
+      },
+      "splittingStrategy": {
+        "label": "تقسیم‌کننده متن"
       }
     },
     "prompt": {

@@ -72,11 +72,14 @@
         }
       },
       "braveApi": {
-        "label":  "Brave API Key",
+        "label": "Brave API Key",
         "placeholder": "Enter your Brave API key"
       },
       "googleDomain": {
         "label": "Google Domain"
+      },
+      "searchOnByDefault": {
+        "label": "Internet Search ON by default"
       }
     },
     "system": {
@@ -113,6 +116,9 @@
       },
       "ssmlEnabled": {
         "label": "Enable SSML (Speech Synthesis Markup Language)"
+      },
+      "responseSplitting": {
+        "label": "Response Splitting"
       }
     }
   },
@@ -334,6 +340,14 @@
         "label": "Number of Retrieved Documents",
         "placeholder": "Enter Number of Retrieved Documents",
         "required": "Please enter the number of retrieved documents"
+      },
+      "splittingSeparator": {
+        "label": "Separator",
+        "placeholder": "Enter Separator (e.g., \\n\\n)",
+        "required": "Please enter a separator"
+      },
+      "splittingStrategy": {
+        "label": "Text Splitter"
       }
     },
     "prompt": {

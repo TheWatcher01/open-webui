@@ -74,6 +74,9 @@
       "braveApi": {
         "label": "Brave API-Schlüssel",
         "placeholder": "Geben Sie Ihren Brave API-Schlüssel ein"
+      },
+      "searchOnByDefault": {
+        "label": "Internetsuche standardmäßig aktiviert"
       }
     },
     "system": {
@@ -331,6 +334,14 @@
         "label": "Anzahl der abgerufenen Dokumente",
         "placeholder": "Anzahl der abgerufenen Dokumente eingeben",
         "required": "Bitte geben Sie die Anzahl der abgerufenen Dokumente ein"
+      },
+      "splittingSeparator": {
+        "label": "Separator",
+        "placeholder": "Separator eingeben (z.B. \\n\\n)",
+        "required": "Bitte geben Sie einen Separator ein"
+      },
+      "splittingStrategy": {
+        "label": "Text-Splitter"
       }
     },
     "prompt": {

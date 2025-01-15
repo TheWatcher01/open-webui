@@ -100,6 +100,7 @@ webui_port=3000
 headless=false
 build_image=false
 kill_compose=false
+enable_gpu=true
 
 # Function to extract value from the parameter
 extract_value() {

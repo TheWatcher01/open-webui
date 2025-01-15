@@ -77,6 +77,9 @@
       "braveApi": {
         "label": "Brave API 密钥",
         "placeholder": "输入您的 Brave API 密钥"
+      },
+      "searchOnByDefault": {
+        "label": "默认开启网络搜索"
       }
     },
     "system": {
@@ -336,6 +339,14 @@
         "label": "检索文档数量",
         "placeholder": "输入检索文档数量",
         "required": "请输入检索文档数量"
+      },
+      "splittingSeparator": {
+        "label": "分隔符",
+        "placeholder": "输入分隔符（例如：\\n\\n）",
+        "required": "请输入分隔符"
+      },
+      "splittingStrategy": {
+        "label": "文本分割器"
       }
     },
     "prompt": {

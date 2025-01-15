@@ -334,3 +334,5 @@ packages/**/.turbo
 CHANGELOG-*.md
 *.mdx
 build-storybook.log
+
+qdrant_data/*

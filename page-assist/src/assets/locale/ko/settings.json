@@ -77,6 +77,9 @@
       "braveApi": {
         "label": "Brave API 키",
         "placeholder": "Brave API 키를 입력하세요"
+      },
+      "searchOnByDefault": {
+        "label": "기본적으로 인터넷 검색 켜기"
       }
     },
     "system": {
@@ -334,6 +337,14 @@
         "label": "검색 문서 수",
         "placeholder": "검색 문서 수 입력",
         "required": "검색 문서 수를 입력해주세요"
+      },
+      "splittingSeparator": {
+        "label": "구분자",
+        "placeholder": "구분자 입력 (예: \\n\\n)",
+        "required": "구분자를 입력해주세요"
+      },
+      "splittingStrategy": {
+        "label": "텍스트 분할기"
       }
     },
     "prompt": {

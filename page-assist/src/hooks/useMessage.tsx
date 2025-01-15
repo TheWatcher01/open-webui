@@ -34,7 +34,6 @@ import { pageAssistModel } from "@/models"
 import { getPrompt } from "@/services/application"
 import { humanMessageFormatter } from "@/utils/human-message"
 import { pageAssistEmbeddingModel } from "@/models/embedding"
-import { PageAssistVectorStore } from "@/libs/PageAssistVectorStore"
 import { PAMemoryVectorStore } from "@/libs/PAMemoryVectorStore"
 import { getScreenshotFromCurrentTab } from "@/libs/get-screenshot"
 
@@ -56,7 +55,10 @@ export const useMessage = () => {
     setWebSearch,
     isSearchingInternet
   } = useStoreMessageOption()
-
+  const [defaultInternetSearchOn, ] = useStorage(
+    "defaultInternetSearchOn",
+    false
+  )
   const [chatWithWebsiteEmbedding] = useStorage(
     "chatWithWebsiteEmbedding",
     true
@@ -84,7 +86,9 @@ export const useMessage = () => {
     selectedQuickPrompt,
     setSelectedQuickPrompt,
     selectedSystemPrompt,
-    setSelectedSystemPrompt
+    setSelectedSystemPrompt,
+    useOCR,
+    setUseOCR
   } = useStoreMessage()
 
   const [speechToTextLanguage, setSpeechToTextLanguage] = useStorage(
@@ -106,6 +110,9 @@ export const useMessage = () => {
     setIsProcessing(false)
     setStreaming(false)
     currentChatModelSettings.reset()
+    if(defaultInternetSearchOn) {
+      setWebSearch(true)
+    }
   }
 
   const chatWithWebsiteMode = async (
@@ -141,7 +148,22 @@ export const useMessage = () => {
         currentChatModelSettings?.numPredict ??
         userDefaultModelSettings?.numPredict,
       useMMap:
-        currentChatModelSettings?.useMMap ?? userDefaultModelSettings?.useMMap
+        currentChatModelSettings?.useMMap ?? userDefaultModelSettings?.useMMap,
+      minP: currentChatModelSettings?.minP ?? userDefaultModelSettings?.minP,
+      repeatLastN:
+        currentChatModelSettings?.repeatLastN ??
+        userDefaultModelSettings?.repeatLastN,
+      repeatPenalty:
+        currentChatModelSettings?.repeatPenalty ??
+        userDefaultModelSettings?.repeatPenalty,
+      tfsZ: currentChatModelSettings?.tfsZ ?? userDefaultModelSettings?.tfsZ,
+      numKeep:
+        currentChatModelSettings?.numKeep ?? userDefaultModelSettings?.numKeep,
+      numThread:
+        currentChatModelSettings?.numThread ??
+        userDefaultModelSettings?.numThread,
+      useMlock:
+        currentChatModelSettings?.useMlock ?? userDefaultModelSettings?.useMlock
     })
 
     let newMessage: Message[] = []
@@ -276,7 +298,26 @@ export const useMessage = () => {
             userDefaultModelSettings?.numPredict,
           useMMap:
             currentChatModelSettings?.useMMap ??
-            userDefaultModelSettings?.useMMap
+            userDefaultModelSettings?.useMMap,
+          minP:
+            currentChatModelSettings?.minP ?? userDefaultModelSettings?.minP,
+          repeatLastN:
+            currentChatModelSettings?.repeatLastN ??
+            userDefaultModelSettings?.repeatLastN,
+          repeatPenalty:
+            currentChatModelSettings?.repeatPenalty ??
+            userDefaultModelSettings?.repeatPenalty,
+          tfsZ:
+            currentChatModelSettings?.tfsZ ?? userDefaultModelSettings?.tfsZ,
+          numKeep:
+            currentChatModelSettings?.numKeep ??
+            userDefaultModelSettings?.numKeep,
+          numThread:
+            currentChatModelSettings?.numThread ??
+            userDefaultModelSettings?.numThread,
+          useMlock:
+            currentChatModelSettings?.useMlock ??
+            userDefaultModelSettings?.useMlock
         })
         const response = await questionOllama.invoke(promptForQuestion)
         query = response.content.toString()
@@ -329,7 +370,7 @@ export const useMessage = () => {
         ]
       }
 
-      let humanMessage = humanMessageFormatter({
+      let humanMessage = await humanMessageFormatter({
         content: [
           {
             text: systemPrompt
@@ -338,7 +379,8 @@ export const useMessage = () => {
             type: "text"
           }
         ],
-        model: selectedModel
+        model: selectedModel,
+        useOCR
       })
 
       const applicationChatHistory = generateHistory(history, selectedModel)
@@ -489,7 +531,22 @@ export const useMessage = () => {
         currentChatModelSettings?.numPredict ??
         userDefaultModelSettings?.numPredict,
       useMMap:
-        currentChatModelSettings?.useMMap ?? userDefaultModelSettings?.useMMap
+        currentChatModelSettings?.useMMap ?? userDefaultModelSettings?.useMMap,
+      minP: currentChatModelSettings?.minP ?? userDefaultModelSettings?.minP,
+      repeatLastN:
+        currentChatModelSettings?.repeatLastN ??
+        userDefaultModelSettings?.repeatLastN,
+      repeatPenalty:
+        currentChatModelSettings?.repeatPenalty ??
+        userDefaultModelSettings?.repeatPenalty,
+      tfsZ: currentChatModelSettings?.tfsZ ?? userDefaultModelSettings?.tfsZ,
+      numKeep:
+        currentChatModelSettings?.numKeep ?? userDefaultModelSettings?.numKeep,
+      numThread:
+        currentChatModelSettings?.numThread ??
+        userDefaultModelSettings?.numThread,
+      useMlock:
+        currentChatModelSettings?.useMlock ?? userDefaultModelSettings?.useMlock
     })
 
     let newMessage: Message[] = []
@@ -564,7 +621,7 @@ export const useMessage = () => {
         )
       }
 
-      let humanMessage = humanMessageFormatter({
+      let humanMessage = await humanMessageFormatter({
         content: [
           {
             text: message,
@@ -575,7 +632,8 @@ export const useMessage = () => {
             type: "image_url"
           }
         ],
-        model: selectedModel
+        model: selectedModel,
+        useOCR
       })
 
       let generationInfo: any | undefined = undefined
@@ -725,7 +783,22 @@ export const useMessage = () => {
         currentChatModelSettings?.numPredict ??
         userDefaultModelSettings?.numPredict,
       useMMap:
-        currentChatModelSettings?.useMMap ?? userDefaultModelSettings?.useMMap
+        currentChatModelSettings?.useMMap ?? userDefaultModelSettings?.useMMap,
+      minP: currentChatModelSettings?.minP ?? userDefaultModelSettings?.minP,
+      repeatLastN:
+        currentChatModelSettings?.repeatLastN ??
+        userDefaultModelSettings?.repeatLastN,
+      repeatPenalty:
+        currentChatModelSettings?.repeatPenalty ??
+        userDefaultModelSettings?.repeatPenalty,
+      tfsZ: currentChatModelSettings?.tfsZ ?? userDefaultModelSettings?.tfsZ,
+      numKeep:
+        currentChatModelSettings?.numKeep ?? userDefaultModelSettings?.numKeep,
+      numThread:
+        currentChatModelSettings?.numThread ??
+        userDefaultModelSettings?.numThread,
+      useMlock:
+        currentChatModelSettings?.useMlock ?? userDefaultModelSettings?.useMlock
     })
 
     let newMessage: Message[] = []
@@ -769,17 +842,18 @@ export const useMessage = () => {
       const prompt = await systemPromptForNonRag()
       const selectedPrompt = await getPromptById(selectedSystemPrompt)
 
-      let humanMessage = humanMessageFormatter({
+      let humanMessage = await humanMessageFormatter({
         content: [
           {
             text: message,
             type: "text"
           }
         ],
-        model: selectedModel
+        model: selectedModel,
+        useOCR
       })
       if (image.length > 0) {
-        humanMessage = humanMessageFormatter({
+        humanMessage = await humanMessageFormatter({
           content: [
             {
               text: message,
@@ -790,7 +864,8 @@ export const useMessage = () => {
               type: "image_url"
             }
           ],
-          model: selectedModel
+          model: selectedModel,
+          useOCR
         })
       }
 
@@ -955,7 +1030,22 @@ export const useMessage = () => {
         currentChatModelSettings?.numPredict ??
         userDefaultModelSettings?.numPredict,
       useMMap:
-        currentChatModelSettings?.useMMap ?? userDefaultModelSettings?.useMMap
+        currentChatModelSettings?.useMMap ?? userDefaultModelSettings?.useMMap,
+      minP: currentChatModelSettings?.minP ?? userDefaultModelSettings?.minP,
+      repeatLastN:
+        currentChatModelSettings?.repeatLastN ??
+        userDefaultModelSettings?.repeatLastN,
+      repeatPenalty:
+        currentChatModelSettings?.repeatPenalty ??
+        userDefaultModelSettings?.repeatPenalty,
+      tfsZ: currentChatModelSettings?.tfsZ ?? userDefaultModelSettings?.tfsZ,
+      numKeep:
+        currentChatModelSettings?.numKeep ?? userDefaultModelSettings?.numKeep,
+      numThread:
+        currentChatModelSettings?.numThread ??
+        userDefaultModelSettings?.numThread,
+      useMlock:
+        currentChatModelSettings?.useMlock ?? userDefaultModelSettings?.useMlock
     })
 
     let newMessage: Message[] = []
@@ -1037,7 +1127,26 @@ export const useMessage = () => {
             userDefaultModelSettings?.numPredict,
           useMMap:
             currentChatModelSettings?.useMMap ??
-            userDefaultModelSettings?.useMMap
+            userDefaultModelSettings?.useMMap,
+          minP:
+            currentChatModelSettings?.minP ?? userDefaultModelSettings?.minP,
+          repeatLastN:
+            currentChatModelSettings?.repeatLastN ??
+            userDefaultModelSettings?.repeatLastN,
+          repeatPenalty:
+            currentChatModelSettings?.repeatPenalty ??
+            userDefaultModelSettings?.repeatPenalty,
+          tfsZ:
+            currentChatModelSettings?.tfsZ ?? userDefaultModelSettings?.tfsZ,
+          numKeep:
+            currentChatModelSettings?.numKeep ??
+            userDefaultModelSettings?.numKeep,
+          numThread:
+            currentChatModelSettings?.numThread ??
+            userDefaultModelSettings?.numThread,
+          useMlock:
+            currentChatModelSettings?.useMlock ??
+            userDefaultModelSettings?.useMlock
         })
         const response = await questionOllama.invoke(promptForQuestion)
         query = response.content.toString()
@@ -1048,17 +1157,18 @@ export const useMessage = () => {
 
       //  message = message.trim().replaceAll("\n", " ")
 
-      let humanMessage = humanMessageFormatter({
+      let humanMessage = await humanMessageFormatter({
         content: [
           {
             text: message,
             type: "text"
           }
         ],
-        model: selectedModel
+        model: selectedModel,
+        useOCR
       })
       if (image.length > 0) {
-        humanMessage = humanMessageFormatter({
+        humanMessage = await humanMessageFormatter({
           content: [
             {
               text: message,
@@ -1069,7 +1179,8 @@ export const useMessage = () => {
               type: "image_url"
             }
           ],
-          model: selectedModel
+          model: selectedModel,
+          useOCR
         })
       }
 
@@ -1227,7 +1338,22 @@ export const useMessage = () => {
         currentChatModelSettings?.numPredict ??
         userDefaultModelSettings?.numPredict,
       useMMap:
-        currentChatModelSettings?.useMMap ?? userDefaultModelSettings?.useMMap
+        currentChatModelSettings?.useMMap ?? userDefaultModelSettings?.useMMap,
+      minP: currentChatModelSettings?.minP ?? userDefaultModelSettings?.minP,
+      repeatLastN:
+        currentChatModelSettings?.repeatLastN ??
+        userDefaultModelSettings?.repeatLastN,
+      repeatPenalty:
+        currentChatModelSettings?.repeatPenalty ??
+        userDefaultModelSettings?.repeatPenalty,
+      tfsZ: currentChatModelSettings?.tfsZ ?? userDefaultModelSettings?.tfsZ,
+      numKeep:
+        currentChatModelSettings?.numKeep ?? userDefaultModelSettings?.numKeep,
+      numThread:
+        currentChatModelSettings?.numThread ??
+        userDefaultModelSettings?.numThread,
+      useMlock:
+        currentChatModelSettings?.useMlock ?? userDefaultModelSettings?.useMlock
     })
 
     let newMessage: Message[] = []
@@ -1270,17 +1396,18 @@ export const useMessage = () => {
 
     try {
       const prompt = await getPrompt(messageType)
-      let humanMessage = humanMessageFormatter({
+      let humanMessage = await humanMessageFormatter({
         content: [
           {
             text: prompt.replace("{text}", message),
             type: "text"
           }
         ],
-        model: selectedModel
+        model: selectedModel,
+        useOCR
       })
       if (image.length > 0) {
-        humanMessage = humanMessageFormatter({
+        humanMessage = await humanMessageFormatter({
           content: [
             {
               text: prompt.replace("{text}", message),
@@ -1291,7 +1418,8 @@ export const useMessage = () => {
               type: "image_url"
             }
           ],
-          model: selectedModel
+          model: selectedModel,
+          useOCR
         })
       }
 
@@ -1590,6 +1718,9 @@ export const useMessage = () => {
     selectedSystemPrompt,
     setSelectedSystemPrompt,
     speechToTextLanguage,
-    setSpeechToTextLanguage
+    setSpeechToTextLanguage,
+    useOCR,
+    setUseOCR,
+    defaultInternetSearchOn
   }
 }

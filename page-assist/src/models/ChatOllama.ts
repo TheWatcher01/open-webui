@@ -95,11 +95,15 @@ export class ChatOllama
 
     topP?: number;
 
+    minP?: number;
+
     typicalP?: number;
 
     useMLock?: boolean;
 
     useMMap?: boolean;
+
+    useMlock?: boolean;
 
     vocabOnly?: boolean;
 
@@ -142,9 +146,11 @@ export class ChatOllama
         this.tfsZ = fields.tfsZ;
         this.topK = fields.topK;
         this.topP = fields.topP;
+        this.minP = fields.minP;
         this.typicalP = fields.typicalP;
         this.useMLock = fields.useMLock;
         this.useMMap = fields.useMMap;
+        this.useMlock = fields.useMlock;
         this.vocabOnly = fields.vocabOnly;
         this.format = fields.format;
         this.seed = fields.seed;
@@ -205,8 +211,9 @@ export class ChatOllama
                 tfs_z: this.tfsZ,
                 top_k: this.topK,
                 top_p: this.topP,
+                min_p: this.minP,
                 typical_p: this.typicalP,
-                use_mlock: this.useMLock,
+                use_mlock: this.useMlock,
                 use_mmap: this.useMMap,
                 vocab_only: this.vocabOnly,
                 seed: this.seed,

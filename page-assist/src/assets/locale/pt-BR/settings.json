@@ -74,6 +74,9 @@
       "braveApi": {
         "label": "Chave da API do Brave",
         "placeholder": "Digite sua chave da API do Brave"
+      },
+      "searchOnByDefault": {
+        "label": "Pesquisa na Internet ativada por padrão"
       }
     },
     "system": {
@@ -331,6 +334,14 @@
         "label": "Número de Documentos Recuperados",
         "placeholder": "Digite o Número de Documentos Recuperados",
         "required": "Por favor, insira o número de documentos recuperados"
+      },
+      "splittingSeparator": {
+        "label": "Separador",
+        "placeholder": "Digite o Separador (ex: \\n\\n)",
+        "required": "Por favor, insira um separador"
+      },
+      "splittingStrategy": {
+        "label": "Divisor de Texto"
       }
     },
     "prompt": {
